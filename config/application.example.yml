@@ -1,0 +1,10 @@
+github:
+  email: 'email@example.com'
+  pass: 'password'
+  repos: 'example/repo, example/repo'
+  name: 'John Doe'
+  branch: 'master'
+toggl:
+  email: 'email@example.com'
+  pass: 'password'
+  pid: '123456789'

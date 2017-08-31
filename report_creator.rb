@@ -12,18 +12,10 @@ class ReportCreator
   end
 
   def perform
-    log_in && process_commits && create_entry
+    process_commits && create_entry
   end
 
   private
-
-  def log_in
-    @toggl = TogglV8::API.new(@credentials['toggl']['email'], @credentials['toggl']['pass'])
-    Octokit.configure do |c|
-      c.login = @credentials['github']['email']
-      c.password = @credentials['github']['pass']
-    end
-  end
 
   def process_commits
     collect && filter && collect_names && create_tags
@@ -67,12 +59,12 @@ class ReportCreator
     start_at = DateTime.new(@date.year, @date.month, @date.day, 11, rand(0..15), 0, '+03:00')
     data = {
       'description' => @commit_names.join(' / '),
-      'wid' => @toggl.my_workspaces(@toggl.me).first['id'],
+      'wid' => $toggl.my_workspaces($toggl.me).first['id'],
       'duration' => rand(28_700..29_200),
-      'start' => @toggl.iso8601(start_at.to_datetime),
+      'start' => $toggl.iso8601(start_at.to_datetime),
       'pid' => @credentials['toggl']['pid'].to_i,
       'tags' => @tags.uniq
     }
-    @toggl.create_time_entry(data)
+    $toggl.create_time_entry(data)
   end
 end

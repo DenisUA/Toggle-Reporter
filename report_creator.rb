@@ -1,14 +1,13 @@
 require 'togglv8'
 require 'octokit'
 require 'json'
-require 'yaml'
 
 class ReportCreator
-  def initialize(date)
-    @credentials = YAML.load_file('config/application.yml')
+  def initialize(date, credentials)
     @commits = []
     @tags = []
     @date = date
+    @credentials = credentials
   end
 
   def perform

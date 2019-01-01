@@ -5,6 +5,5 @@ github:
   name: 'John Doe'
   branch: 'master'
 toggl:
-  email: 'email@example.com'
-  pass: 'password'
+  api_token: 'token'
   pid: '123456789'

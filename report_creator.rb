@@ -56,14 +56,15 @@ class ReportCreator
   def create_entry
     return if @commit_names.empty?
     start_at = DateTime.new(@date.year, @date.month, @date.day, 11, rand(0..15), 0, '+03:00')
-    data = {
+    user = $toggl_api.me(all=true)
+    workspace_id = $toggl_api.my_workspaces(user).first['id']
+    $toggl_api.create_time_entry({
       'description' => @commit_names.join(' / '),
-      'wid' => $toggl.my_workspaces($toggl.me).first['id'],
+      'wid' => workspace_id,
       'duration' => rand(28_700..29_200),
-      'start' => $toggl.iso8601(start_at.to_datetime),
+      'start' => $toggl_api.iso8601(start_at.to_datetime),
       'pid' => @credentials['toggl']['pid'].to_i,
       'tags' => @tags.uniq
-    }
-    $toggl.create_time_entry(data)
+    })
   end
 end

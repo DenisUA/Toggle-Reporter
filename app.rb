@@ -26,7 +26,7 @@ class Application
   end
 
   def log_in
-    $toggl = TogglV8::API.new(@credentials['toggl']['email'], @credentials['toggl']['pass'])
+    $toggl_api = TogglV8::API.new(@credentials['toggl']['api_token'])
     Octokit.configure do |c|
       c.login = @credentials['github']['email']
       c.password = @credentials['github']['pass']
